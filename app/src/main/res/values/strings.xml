@@ -2,4 +2,12 @@
     <string name="app_name">wordle</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+
+    <!-- result strings -->
+    <string name="defaultMessage">User either won or lost. Word was:\n</string>
+    <string name="wonMessage">Congrats, You WON! the word was:\n </string>
+    <string name="lostMessage">Sorry, You Lost. Word was:\n</string>
+    <string name="playAgainText">Play Again?</string>
 </resources>
