@@ -2,4 +2,13 @@
     <string name="app_name">wordle</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!--- Strings used for the about xml -->
+    <string name="aboutGameTitle">About Game</string>
+    <string name="aboutGameText">This game was created by the developers for our final project. The project is for the class Mobile App I. We used Android Studio to develop this app.\nVersion 1.1.1</string>
+    <string name="aboutUsTitle">About Us</string>
+    <string name="aboutUsText">Game App developed by UMass Lowell students:\nAria Siriouthay, Josephine Luna, Jennifer Robles </string>
+    <string name="contactTitle">Contact Us</string>
+    <string name="contactText">Any questions or concerns please email\n<i>email@email.com</i></string>
 </resources>

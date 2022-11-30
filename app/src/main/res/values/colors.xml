@@ -7,4 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!--wordle colors added -->
+    <color name="light_brown">#F2E7D5</color>
+    <color name="light_blue">#717bff</color>
+    <color name="green">#019a01	</color>
+    <color name="yellow">#ffc425</color>
+    <color name="light_yellow">#ffd972</color>
 </resources>
