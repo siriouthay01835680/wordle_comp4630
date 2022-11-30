@@ -2,4 +2,11 @@
     <string name="app_name">wordle</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="how_to_play">How To Play</string>
+    <string name="guess_the_wordle">Guess the Wordle in 6 tries.</string>
+    <string name="rule1">• Each guess must be a valid 5-letter word.</string>
+    <string name="rule2">• The color of the tiles will change to show how close your guess was to the word.</string>
+    <string name="examples">Examples</string>
+    <string name="ex1_desc">Here, E is in the word and in the correct spot.</string>
+    <string name="ex2_desc">Here, T and E are in the word but are not in the correct spot.</string>
 </resources>
