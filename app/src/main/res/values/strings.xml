@@ -2,7 +2,32 @@
     <string name="app_name">wordle</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="lightMode">Light Mode</string>
+
+    <!-- strings for help page -->
+    <string name="how_to_play">How To Play</string>
+    <string name="guess_the_wordle">Guess the Wordle in 6 tries.</string>
+    <string name="rule1">• Each guess must be a valid 5-letter word.</string>
+    <string name="rule2">• The color of the tiles will change to show how close your guess was to the word.</string>
+    <string name="examples">Examples</string>
+    <string name="ex1_desc">Here, E is in the word and in the correct spot.</string>
+    <string name="ex2_desc">Here, T and E are in the word but are not in the correct spot.</string>
+
+    <!-- result strings -->
+    <string name="defaultMessage">User either won or lost. Word was:\n</string>
+    <string name="wonMessage">Congrats, You WON! the word was:\n </string>
+    <string name="lostMessage">Sorry, You Lost. Word was:\n</string>
+    <string name="playAgainText">Play Again?</string>
+
+    <!--- Strings used for the about xml -->
+    <string name="aboutGameTitle">About Game</string>
+    <string name="aboutGameText">This game was created by the developers for our final project. The project is for the class Mobile App I. We used Android Studio to develop this app.\nVersion 1.1.1</string>
+    <string name="aboutUsTitle">About Us</string>
+    <string name="aboutUsText">Game App developed by UMass Lowell students:\nAria Siriouthay, Josephine Luna, Jennifer Robles </string>
+    <string name="contactTitle">Contact Us</string>
+    <string name="contactText">Any questions or concerns please email\n<i>email@email.com</i></string>
+    
+    <!-- settings strings -->
+     <string name="lightMode">Light Mode</string>
     <string name="hints">Hints</string>
     <string name="music">Music</string>
     <string name="on">On</string>

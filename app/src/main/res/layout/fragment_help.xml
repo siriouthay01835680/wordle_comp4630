@@ -1,14 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HelpFragment">
+    android:orientation="vertical"
+    tools:context=".HelpFragment"
+    android:padding="10dp">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <TextView
+        android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:text="@string/how_to_play"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/header2"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="@string/guess_the_wordle"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/body1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/rule1"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/body2"
+        android:layout_width="match_parent"
+        android:layout_height="112dp"
+        android:text="@string/rule2"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/header3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:text="@string/examples"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/example1"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_weight="0"
+        android:src="@drawable/correct_letter" />
+
+    <TextView
+        android:id="@+id/desc1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ex1_desc"
+        android:layout_weight="0"/>
+
+    <ImageView
+        android:id="@+id/example2"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_weight="0"
+        android:src="@drawable/wrong_letter_wrong_spot" />
+
+    <TextView
+        android:id="@+id/desc2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ex2_desc"
+        android:layout_weight="0"/>
+
+</LinearLayout>
