@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/gameFragment"
+        android:title="@string/gameIcon"
+        android:icon="@drawable/gameicon"
+        app:showAsAction="withText" />
+
+    <item
+        android:id="@+id/helpFragment"
+        android:title="@string/helpIcon"
+        android:icon="@drawable/helpicon"
+        app:showAsAction="withText" />
+
+    <item
+        android:id="@+id/aboutFragment"
+        android:title="@string/aboutIcon"
+        android:icon="@drawable/profileicon"
+        app:showAsAction="withText" />
 
 </menu>

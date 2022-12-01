@@ -32,4 +32,10 @@
     <string name="music">Music</string>
     <string name="on">On</string>
     <string name="off">Off</string>
+
+    <!-- strings for menu bottom and toolbar-->
+    <string name="gameIcon">play</string>
+    <string name="helpIcon">help</string>
+    <string name="aboutIcon">about</string>
+    <string name="settingIcon">settings</string>
 </resources>
