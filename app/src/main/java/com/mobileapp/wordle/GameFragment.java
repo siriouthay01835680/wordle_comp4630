@@ -20,7 +20,7 @@ public class GameFragment extends Fragment {
     final private String row1 = "qwertyuiop";
     final private String row2 = "asdfghjkl";
     final private String row3 = "zxcvbnm";
-    final private String alphabet2 = row1 + row2 + row3;
+    final private String alphabet = row1 + row2 + row3;
 
     String currentWord = "";
     Button[] alphaButtons = new Button[26];
@@ -47,10 +47,10 @@ public class GameFragment extends Fragment {
     public void addKeyboard(){
         View view = binding.getRoot();
 
-        for(int i=0; i < alphabet2.length() ; i++) {
+        for(int i=0; i < alphabet.length() ; i++) {
             //setting up button
             alphaButtons[i] = new Button(view.getContext());
-            char l = alphabet2.charAt(i);
+            char l = alphabet.charAt(i);
             String letter = Character.toString(l);
             alphaButtons[i].setText(letter);
 
@@ -106,14 +106,15 @@ public class GameFragment extends Fragment {
         //submits words
         submit.setOnClickListener(view1 -> {
 
-            //iterate through the current 5 letter word
+            //can only submit if all length of the word is 5
             if(currentWord.length() == 5) {
+                //iterate through the current 5 letter word
                 for(int i = 0; i < 5; i++){
                     //gets letter
                    char letter =  currentWord.charAt(i);
 
                     //looking for the index in our array of buttons with just the letter
-                   int index = alphabet2.indexOf(letter);
+                   int index = alphabet.indexOf(letter);
                     //work on the logic whether its contained and if its in right position
                     //if not either turn gray
                     //for now it all turns green
