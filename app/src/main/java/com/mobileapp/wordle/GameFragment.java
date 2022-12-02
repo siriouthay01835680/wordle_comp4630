@@ -105,13 +105,20 @@ public class GameFragment extends Fragment {
 
         //submits words
         submit.setOnClickListener(view1 -> {
+
+            //iterate through the current 5 letter word
             if(currentWord.length() == 5) {
-                for(int i = 0; i < alphabet2.length(); i++){
-                    //work on the logic whether its contained and if its in right pos
+                for(int i = 0; i < 5; i++){
+                    //gets letter
+                   char letter =  currentWord.charAt(i);
+
+                    //looking for the index in our array of buttons with just the letter
+                   int index = alphabet2.indexOf(letter);
+                    //work on the logic whether its contained and if its in right position
                     //if not either turn gray
                     //for now it all turns green
-                    if(currentWord.contains(alphaButtons[i].getText().toString())){
-                        alphaButtons[i].setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+                    if(currentWord.contains(alphaButtons[index].getText().toString())){
+                        alphaButtons[index].setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
                     }
 
                 }
