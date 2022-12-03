@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".GameFragment">
 
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/gameGridLayout"
+        android:layout_margin="8sp"
+        android:rowCount="6"
+        android:columnCount="5">
+    </GridLayout>
 
 
     <TextView

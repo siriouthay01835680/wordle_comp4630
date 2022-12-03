@@ -1,12 +1,17 @@
 package com.mobileapp.wordle;
 
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -27,6 +32,9 @@ public class GameFragment extends Fragment {
     Button submit;
     Button delete;
 
+    //grid variables
+    TextView[][] gameGrid = new TextView[6][5];
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,11 +44,32 @@ public class GameFragment extends Fragment {
         binding = FragmentGameBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+        buildGameGrid();
         addKeyboard();
 
 
         // Inflate the layout for this fragment
         return view;
+    }
+    public void buildGameGrid(){
+        View view = binding.getRoot();
+        for(int i = 0; i < 6; i++){
+            for(int j = 0; j < 5; j++){
+                //access the GridLayout
+                GridLayout gl = binding.gameGridLayout;
+                //create new TextViews and set default attributes
+                gameGrid[i][j] = new TextView(view.getContext());
+                gameGrid[i][j].setTextColor(Color.BLACK);
+                gameGrid[i][j].setText("here");
+//                gameGrid[i][j].setPadding(30,30,30,30);
+                gameGrid[i][j].setHeight(180);
+                gameGrid[i][j].setWidth(200);
+
+                gameGrid[i][j].setBackgroundResource(R.color.off_white);
+                //add newly created TextView to GridLayout
+                gl.addView(gameGrid[i][j]);
+            }
+        }
     }
 
 
