@@ -131,6 +131,13 @@ public class GameFragment extends Fragment {
 
         });
 
+    }
 
+
+//set binding to null
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }
