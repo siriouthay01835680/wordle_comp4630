@@ -4,6 +4,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,14 +61,21 @@ public class GameFragment extends Fragment {
                 //create new TextViews and set default attributes
                 gameGrid[i][j] = new TextView(view.getContext());
                 gameGrid[i][j].setTextColor(Color.BLACK);
-                gameGrid[i][j].setText("here");
-//                gameGrid[i][j].setPadding(30,30,30,30);
-                gameGrid[i][j].setHeight(180);
-                gameGrid[i][j].setWidth(200);
+                gameGrid[i][j].setText("A");
+                gameGrid[i][j].setTextSize(14);
+                gameGrid[i][j].setGravity(Gravity.CENTER);
+                gameGrid[i][j].setPadding(30,30,30,30);
+
+                //setting layout params
+                GridLayout.LayoutParams layoutParams=new GridLayout.LayoutParams();
+                layoutParams.setMargins(5, 5, 5, 5);
+
+                gameGrid[i][j].setHeight(200);
+                gameGrid[i][j].setWidth(195);
 
                 gameGrid[i][j].setBackgroundResource(R.color.off_white);
                 //add newly created TextView to GridLayout
-                gl.addView(gameGrid[i][j]);
+                gl.addView(gameGrid[i][j], layoutParams);
             }
         }
     }
