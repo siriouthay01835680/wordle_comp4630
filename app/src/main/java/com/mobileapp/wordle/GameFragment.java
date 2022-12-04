@@ -61,8 +61,8 @@ public class GameFragment extends Fragment {
                 //create new TextViews and set default attributes
                 gameGrid[i][j] = new TextView(view.getContext());
                 gameGrid[i][j].setTextColor(Color.BLACK);
-                gameGrid[i][j].setText("A");
-                gameGrid[i][j].setTextSize(14);
+                gameGrid[i][j].setText("W");
+                gameGrid[i][j].setTextSize(35);
                 gameGrid[i][j].setGravity(Gravity.CENTER);
                 gameGrid[i][j].setPadding(30,30,30,30);
 
@@ -70,7 +70,7 @@ public class GameFragment extends Fragment {
                 GridLayout.LayoutParams layoutParams=new GridLayout.LayoutParams();
                 layoutParams.setMargins(5, 5, 5, 5);
 
-                gameGrid[i][j].setHeight(200);
+                gameGrid[i][j].setHeight(180);
                 gameGrid[i][j].setWidth(195);
 
                 gameGrid[i][j].setBackgroundResource(R.color.off_white);
