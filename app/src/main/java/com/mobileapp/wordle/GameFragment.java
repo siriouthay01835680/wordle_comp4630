@@ -36,6 +36,9 @@ public class GameFragment extends Fragment {
     //grid variables
     TextView[][] gameGrid = new TextView[6][5];
 
+    //test variables for checkGuess() prototype; can delete along with checkGuess()
+    final String wordToGuess = "WORDL";
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,10 +51,17 @@ public class GameFragment extends Fragment {
         buildGameGrid();
         addKeyboard();
 
+        //prototype can be deleted later if necessary
+        checkGuess("PEARL", 0);
+        checkGuess("WORLD", 1);
+        checkGuess("LDROW", 2);
+        checkGuess("WORDL", 3);
+
 
         // Inflate the layout for this fragment
         return view;
     }
+
     public void buildGameGrid(){
         View view = binding.getRoot();
         for(int i = 0; i < 6; i++){
@@ -61,7 +71,6 @@ public class GameFragment extends Fragment {
                 //create new TextViews and set default attributes
                 gameGrid[i][j] = new TextView(view.getContext());
                 gameGrid[i][j].setTextColor(Color.BLACK);
-                gameGrid[i][j].setText("W");
                 gameGrid[i][j].setTextSize(35);
                 gameGrid[i][j].setGravity(Gravity.CENTER);
                 gameGrid[i][j].setPadding(30,30,30,30);
@@ -79,6 +88,29 @@ public class GameFragment extends Fragment {
             }
         }
     }
+
+    /** BEGIN: Prototype for checking guess against the word to be guessed; can be deleted **/
+    public void checkGuess(String guess, int lives){
+        for(int i = 0; i < 5; i++){
+            if(guess.charAt(i) == wordToGuess.charAt(i)){
+            gameGrid[lives][i].setBackgroundResource(R.color.green);
+            gameGrid[lives][i].setText(String.valueOf(guess.charAt(i)));
+            gameGrid[lives][i].setTextColor(Color.WHITE);
+            }
+
+            else if(wordToGuess.contains(String.valueOf(guess.charAt(i)))){
+                gameGrid[lives][i].setBackgroundResource(R.color.yellow);
+                gameGrid[lives][i].setText(String.valueOf(guess.charAt(i)));
+                gameGrid[lives][i].setTextColor(Color.WHITE);
+            }
+            else {
+                gameGrid[lives][i].setBackgroundResource(R.color.gray);
+                gameGrid[lives][i].setText(String.valueOf(guess.charAt(i)));
+                gameGrid[lives][i].setTextColor(Color.WHITE);
+            }
+        }
+    }
+    /** END: Prototype for checking guess against the word to be guessed **/
 
 
     public void addKeyboard(){
