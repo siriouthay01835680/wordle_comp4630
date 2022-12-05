@@ -14,4 +14,6 @@
     <color name="green">#6aaa64</color>
     <color name="yellow">#D1B036</color>
     <color name="light_yellow">#ffd972</color>
+    <color name="gray">#787c7f</color>
+    <color name="off_white">#F4F4F4</color>
 </resources>

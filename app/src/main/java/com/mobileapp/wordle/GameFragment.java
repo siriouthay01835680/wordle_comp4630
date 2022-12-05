@@ -1,12 +1,18 @@
 package com.mobileapp.wordle;
 
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -27,6 +33,12 @@ public class GameFragment extends Fragment {
     Button submit;
     Button delete;
 
+    //grid variables
+    TextView[][] gameGrid = new TextView[6][5];
+
+    //test variables for checkGuess() prototype; can delete along with checkGuess()
+    final String wordToGuess = "WORDL";
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,12 +48,69 @@ public class GameFragment extends Fragment {
         binding = FragmentGameBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+        buildGameGrid();
         addKeyboard();
+
+        //prototype can be deleted later if necessary
+        checkGuess("PEARL", 0);
+        checkGuess("WORLD", 1);
+        checkGuess("LDROW", 2);
+        checkGuess("WORDL", 3);
 
 
         // Inflate the layout for this fragment
         return view;
     }
+
+    public void buildGameGrid(){
+        View view = binding.getRoot();
+        for(int i = 0; i < 6; i++){
+            for(int j = 0; j < 5; j++){
+                //access the GridLayout
+                GridLayout gl = binding.gameGridLayout;
+                //create new TextViews and set default attributes
+                gameGrid[i][j] = new TextView(view.getContext());
+                gameGrid[i][j].setTextColor(Color.BLACK);
+                gameGrid[i][j].setTextSize(35);
+                gameGrid[i][j].setGravity(Gravity.CENTER);
+                gameGrid[i][j].setPadding(30,30,30,30);
+
+                //setting layout params
+                GridLayout.LayoutParams layoutParams=new GridLayout.LayoutParams();
+                layoutParams.setMargins(5, 5, 5, 5);
+
+                gameGrid[i][j].setHeight(180);
+                gameGrid[i][j].setWidth(195);
+
+                gameGrid[i][j].setBackgroundResource(R.color.off_white);
+                //add newly created TextView to GridLayout
+                gl.addView(gameGrid[i][j], layoutParams);
+            }
+        }
+    }
+
+    /** BEGIN: Prototype for checking guess against the word to be guessed; can be deleted **/
+    public void checkGuess(String guess, int lives){
+        for(int i = 0; i < 5; i++){
+            if(guess.charAt(i) == wordToGuess.charAt(i)){
+            gameGrid[lives][i].setBackgroundResource(R.color.green);
+            gameGrid[lives][i].setText(String.valueOf(guess.charAt(i)));
+            gameGrid[lives][i].setTextColor(Color.WHITE);
+            }
+
+            else if(wordToGuess.contains(String.valueOf(guess.charAt(i)))){
+                gameGrid[lives][i].setBackgroundResource(R.color.yellow);
+                gameGrid[lives][i].setText(String.valueOf(guess.charAt(i)));
+                gameGrid[lives][i].setTextColor(Color.WHITE);
+            }
+            else {
+                gameGrid[lives][i].setBackgroundResource(R.color.gray);
+                gameGrid[lives][i].setText(String.valueOf(guess.charAt(i)));
+                gameGrid[lives][i].setTextColor(Color.WHITE);
+            }
+        }
+    }
+    /** END: Prototype for checking guess against the word to be guessed **/
 
 
     public void addKeyboard(){
