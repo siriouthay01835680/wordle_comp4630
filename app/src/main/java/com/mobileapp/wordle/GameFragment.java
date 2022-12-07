@@ -15,6 +15,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.mobileapp.wordle.databinding.FragmentGameBinding;
 
@@ -31,13 +32,13 @@ public class GameFragment extends Fragment {
     private FragmentGameBinding binding;
 
     // keyboard vars
-    //final private char[] alphabet = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
-    final private String row1 = "qwertyuiop";
-    final private String row2 = "asdfghjkl";
-    final private String row3 = "zxcvbnm";
+    final private String row1 = "QWERTYUIOP";
+    final private String row2 = "ASDFGHJKL";
+    final private String row3 = "ZXCVBNM";
     final private String alphabet = row1 + row2 + row3;
 
-    String currentWord = "";
+    //String currentWord = "";
+
     Button[] alphaButtons = new Button[26];
     Button submit;
     Button delete;
@@ -51,6 +52,13 @@ public class GameFragment extends Fragment {
     //var to hold words from text file
     private List<String> wordList = null;
 
+    // view model
+    private GameViewModelFactory viewModelFactory;
+    private GameViewModel viewModel;
+
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -61,21 +69,32 @@ public class GameFragment extends Fragment {
         try {
             wordList = readFromFileToList("wordfile.txt");
             wordToGuess = pickAWord(wordList);
-            System.out.println(wordToGuess);
+            System.out.println("winning word is" + wordToGuess);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+        //view model
+        viewModelFactory = new GameViewModelFactory(wordToGuess);
+        viewModel = new ViewModelProvider(this, viewModelFactory).get(GameViewModel.class);
+
         buildGameGrid();
         addKeyboard();
 
 
 
         //prototype can be deleted later if necessary
+        /*
         checkGuess("PEARL", 0);
         checkGuess("WORLD", 1);
         checkGuess("LDROW", 2);
-        checkGuess(wordToGuess, 3);
+
+        checkGuess("WORDL", 3);
+        */
+
+        //checkGuess(wordToGuess, 3);
 
 
         // Inflate the layout for this fragment
@@ -110,6 +129,7 @@ public class GameFragment extends Fragment {
     }
 
     /** BEGIN: Prototype for checking guess against the word to be guessed; can be deleted **/
+    /*
     public void checkGuess(String guess, int lives){
         for(int i = 0; i < 5; i++){
             guess = guess.toUpperCase();
@@ -130,8 +150,45 @@ public class GameFragment extends Fragment {
                 gameGrid[lives][i].setTextColor(Color.WHITE);
             }
         }
-    }
+    }*/
     /** END: Prototype for checking guess against the word to be guessed **/
+
+
+    public void checkGuess(){
+        for(int i = 0; i < 5; i++){
+
+            char letter = viewModel.currentGuess.charAt(i);
+
+            //looking for the index in our array of buttons with just the letter
+            int index = alphabet.indexOf(letter);
+
+            if(viewModel.currentGuess.charAt(i) == viewModel.winningWord.charAt(i)){
+                gameGrid[viewModel.lives][i].setBackgroundResource(R.color.green);
+                gameGrid[viewModel.lives][i].setText(String.valueOf(viewModel.currentGuess.charAt(i)));
+                gameGrid[viewModel.lives][i].setTextColor(Color.WHITE);
+
+                //update keyboard
+                alphaButtons[index].setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+            }
+
+            else if(viewModel.winningWord.contains(String.valueOf(viewModel.currentGuess.charAt(i)))){
+                gameGrid[viewModel.lives][i].setBackgroundResource(R.color.yellow);
+                gameGrid[viewModel.lives][i].setText(String.valueOf(viewModel.currentGuess.charAt(i)));
+                gameGrid[viewModel.lives][i].setTextColor(Color.WHITE);
+
+                //update Keyboard
+                alphaButtons[index].setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.yellow)));
+            }
+            else{
+                gameGrid[viewModel.lives][i].setBackgroundResource(R.color.gray);
+                gameGrid[viewModel.lives][i].setText(String.valueOf(viewModel.currentGuess.charAt(i)));
+                gameGrid[viewModel.lives][i].setTextColor(Color.WHITE);
+
+                //update keyboard
+                alphaButtons[index].setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.gray)));
+            }
+        }
+    }
 
 
     public void addKeyboard(){
@@ -148,15 +205,15 @@ public class GameFragment extends Fragment {
             //setting up buttons position
             TableRow.LayoutParams lp = new TableRow.LayoutParams(0,android.widget.TableRow.LayoutParams.MATCH_PARENT,1f);
             if(row1.contains(letter))
-                binding.keyboardRow1.addView( alphaButtons[i], lp);
+                binding.keyboardRow1.addView(alphaButtons[i], lp);
             if(row2.contains(letter))
-                binding.keyboardRow2.addView( alphaButtons[i], lp);
+                binding.keyboardRow2.addView(alphaButtons[i], lp);
             if(row3.contains(letter))
-                binding.keyboardRow3.addView( alphaButtons[i],lp);
+                binding.keyboardRow3.addView(alphaButtons[i],lp);
 
 
             //after the l letter the submit button follows
-            if(l == 'l'){
+            if(l == 'L'){
                 lp = new TableRow.LayoutParams(0,android.widget.TableRow.LayoutParams.MATCH_PARENT,2f);
                 submit = new Button(view.getContext());
                 submit.setText("Enter");
@@ -164,7 +221,7 @@ public class GameFragment extends Fragment {
             }
 
             //after the last letter of keyboard the m letter follows
-            if(l == 'm'){
+            if(l == 'M'){
                 lp = new TableRow.LayoutParams(0,android.widget.TableRow.LayoutParams.MATCH_PARENT,1.5f);
                 delete = new Button(view.getContext());
                 delete.setText("<-");
@@ -173,11 +230,19 @@ public class GameFragment extends Fragment {
 
             //setting event handlers for button
             alphaButtons[i].setOnClickListener(view1 -> {
-                if(currentWord.length() < 5) {
+                if(viewModel.currentGuess.length() < 5) {
                     Button b = (Button) view1;
-                    String key = b.getText().toString();
-                    currentWord += key;
-                    binding.testingWord.setText(currentWord);
+                    String key = b.getText().toString().toUpperCase();
+
+                    //add to grid
+                    gameGrid[viewModel.lives][viewModel.currentPosition].setText(key);
+
+                    viewModel.currentPosition++;
+                    viewModel.currentGuess += key;
+
+                    //delete this
+                    //currentWord += key;
+                    binding.testingWord.setText(viewModel.currentGuess);
                 }
 
             });
@@ -186,35 +251,28 @@ public class GameFragment extends Fragment {
 
         //deletes last character
         delete.setOnClickListener(view1 -> {
-            if(currentWord.length() > 0) {
-                currentWord = currentWord.substring(0, currentWord.length() - 1);
-                binding.testingWord.setText(currentWord);
+            if(viewModel.currentGuess.length() > 0) {
+
+                viewModel.currentGuess = viewModel.currentGuess.substring(0, viewModel.currentGuess.length() - 1);
+                viewModel.currentPosition--;
+                gameGrid[viewModel.lives][viewModel.currentPosition].setText(" ");
+
+                //code below needs to be delete
+                binding.testingWord.setText(viewModel.currentGuess);
             }
 
         });
 
         //submits words
         submit.setOnClickListener(view1 -> {
+            //this is where we can check if a word is valid
 
             //can only submit if all length of the word is 5
-            if(currentWord.length() == 5) {
-                //iterate through the current 5 letter word
-                for(int i = 0; i < 5; i++){
-                    //gets letter
-                   char letter =  currentWord.charAt(i);
-
-                    //looking for the index in our array of buttons with just the letter
-                   int index = alphabet.indexOf(letter);
-                    //work on the logic whether its contained and if its in right position
-                    //if not either turn gray
-                    //for now it all turns green
-                    if(currentWord.contains(alphaButtons[index].getText().toString())){
-                        alphaButtons[index].setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
-                    }
-
-                }
-                currentWord = "";
-                binding.testingWord.setText(currentWord);
+            if(viewModel.currentGuess.length() == 5) {
+                //iterate through the current 5 letter word for keyboard
+                checkGuess();
+                viewModel.submitGuess();
+                binding.testingWord.setText(viewModel.currentGuess);
             }
 
         });
@@ -241,7 +299,9 @@ public class GameFragment extends Fragment {
         return wordList.get(index).toString().toUpperCase();
     }
 
-    //set binding to null
+
+//set binding to null
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
