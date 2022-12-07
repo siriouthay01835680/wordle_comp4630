@@ -112,6 +112,7 @@ public class GameFragment extends Fragment {
     /** BEGIN: Prototype for checking guess against the word to be guessed; can be deleted **/
     public void checkGuess(String guess, int lives){
         for(int i = 0; i < 5; i++){
+            guess = guess.toUpperCase();
             if(guess.charAt(i) == wordToGuess.charAt(i)){
             gameGrid[lives][i].setBackgroundResource(R.color.green);
             gameGrid[lives][i].setText(String.valueOf(guess.charAt(i)));
@@ -237,7 +238,7 @@ public class GameFragment extends Fragment {
     private String pickAWord (List wordList){
         Random rand = new Random();
         int index = rand.nextInt(wordList.size());
-        return wordList.get(index).toString();
+        return wordList.get(index).toString().toUpperCase();
     }
 
     //set binding to null
