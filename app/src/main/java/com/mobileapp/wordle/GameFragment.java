@@ -18,6 +18,15 @@ import androidx.fragment.app.Fragment;
 
 import com.mobileapp.wordle.databinding.FragmentGameBinding;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class GameFragment extends Fragment {
     private FragmentGameBinding binding;
 
@@ -37,8 +46,10 @@ public class GameFragment extends Fragment {
     TextView[][] gameGrid = new TextView[6][5];
 
     //test variables for checkGuess() prototype; can delete along with checkGuess()
-    final String wordToGuess = "WORDL";
+    private String wordToGuess = "";
 
+    //var to hold words from text file
+    private List<String> wordList = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,15 +58,24 @@ public class GameFragment extends Fragment {
         //binding
         binding = FragmentGameBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        try {
+            wordList = readFromFileToList("wordfile.txt");
+            wordToGuess = pickAWord(wordList);
+            System.out.println(wordToGuess);
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         buildGameGrid();
         addKeyboard();
+
+
 
         //prototype can be deleted later if necessary
         checkGuess("PEARL", 0);
         checkGuess("WORLD", 1);
         checkGuess("LDROW", 2);
-        checkGuess("WORDL", 3);
+        checkGuess(wordToGuess, 3);
 
 
         // Inflate the layout for this fragment
@@ -92,6 +112,7 @@ public class GameFragment extends Fragment {
     /** BEGIN: Prototype for checking guess against the word to be guessed; can be deleted **/
     public void checkGuess(String guess, int lives){
         for(int i = 0; i < 5; i++){
+            guess = guess.toUpperCase();
             if(guess.charAt(i) == wordToGuess.charAt(i)){
             gameGrid[lives][i].setBackgroundResource(R.color.green);
             gameGrid[lives][i].setText(String.valueOf(guess.charAt(i)));
@@ -192,18 +213,35 @@ public class GameFragment extends Fragment {
                     }
 
                 }
-
                 currentWord = "";
                 binding.testingWord.setText(currentWord);
-
             }
 
         });
-
     }
 
+    private List <String> readFromFileToList(String fileName) throws IOException{
+        InputStream inputStream = getContext().getAssets().open(fileName);
+        List <String> myList = new ArrayList<String>();
+        try(BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))){
+            String line;
+            while((line = reader.readLine()) != null){
+                System.out.println(line);
+                myList.add(line);
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return myList;
+    }
 
-//set binding to null
+    private String pickAWord (List wordList){
+        Random rand = new Random();
+        int index = rand.nextInt(wordList.size());
+        return wordList.get(index).toString().toUpperCase();
+    }
+
+    //set binding to null
     @Override
     public void onDestroyView() {
         super.onDestroyView();
