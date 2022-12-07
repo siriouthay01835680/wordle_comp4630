@@ -46,6 +46,9 @@ dependencies {
     implementation "androidx.navigation:navigation-ui:$nav_version"
     implementation 'com.google.android.material:material:1.6.1'
 
+    //view model
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.5.1'
+
     //live data
     implementation 'androidx.lifecycle:lifecycle-livedata:2.5.1'
 
