@@ -59,8 +59,9 @@ public class GameFragment extends Fragment {
         binding = FragmentGameBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         try {
-            wordList = readFromFileToList("testfile.txt");
+            wordList = readFromFileToList("wordfile.txt");
             wordToGuess = pickAWord(wordList);
+            System.out.println(wordToGuess);
 
         } catch (IOException e) {
             e.printStackTrace();
