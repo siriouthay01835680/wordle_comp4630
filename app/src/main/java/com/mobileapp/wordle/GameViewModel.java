@@ -9,15 +9,17 @@ import android.widget.TextView;
 
 import androidx.lifecycle.ViewModel;
 
+import java.util.Random;
+
 
 public class GameViewModel extends ViewModel {
     public int lives;
     final public String winningWord;
     public String currentGuess;
-
-
+    public Boolean isHintEnabled;
+    public Integer hintIndex;
     public int currentPosition;
-
+    public char hintChar;
 
 
 
@@ -27,6 +29,8 @@ public class GameViewModel extends ViewModel {
         currentPosition = 0;
         currentGuess = "";
         winningWord = WinWord;
+        isHintEnabled = false;
+        hintChar = ' ';
     }
 
 
@@ -47,5 +51,15 @@ public class GameViewModel extends ViewModel {
 
     }
 
+    public String enableHints(){
+        Random rand = new Random();
+        isHintEnabled = true;
+        int randomNum = rand.nextInt(5);
+//        System.out.println(randomNum);
+//        System.out.println(String.valueOf(winningWord.charAt(randomNum)));
+        hintChar = winningWord.charAt(randomNum);
+        hintIndex = winningWord.indexOf(hintChar);
+        return String.valueOf(hintChar);
+    }
 
 }
