@@ -34,7 +34,9 @@ public class ResultFragment extends Fragment {
             String lostMessage = getResources().getString(R.string.lostMessage);
             lostMessage += word;
             binding.resultMessage.setText(lostMessage);
+            binding.imageTrophy.setVisibility(View.INVISIBLE);
         }
+
 
         //button that goes to a new Game
         binding.newGameButton.setOnClickListener(new View.OnClickListener() {
@@ -46,6 +48,8 @@ public class ResultFragment extends Fragment {
 
         return view;
     }
+
+
 
 
 
