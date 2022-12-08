@@ -182,6 +182,8 @@ public class GameFragment extends Fragment {
                 viewModel.currentGuess = viewModel.currentGuess.substring(0, viewModel.currentGuess.length() - 1);
                 viewModel.currentPosition--;
                 gameGrid[viewModel.lives][viewModel.currentPosition].setText(" ");
+                viewModel.saveGridText(" ");
+
 
                 //code below needs to be delete
                 binding.testingWord.setText(viewModel.currentGuess);
