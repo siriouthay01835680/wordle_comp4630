@@ -17,7 +17,15 @@ public class SettingsFragment extends Fragment {
     private FragmentSettingsBinding binding;
 
     //save state variables
-    private boolean lightModeChecked = false, musicChecked = false;
+//    private boolean lightModeChecked = false, musicChecked = false;
+
+    //save the state of the switches
+//    @Override
+//    public void onSaveInstanceState(Bundle savedInstanceState) {
+//        savedInstanceState.putBoolean("lightModeChecked", lightModeChecked);
+//        savedInstanceState.putBoolean("musicChecked", musicChecked);
+//        super.onSaveInstanceState(savedInstanceState);
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -25,17 +33,26 @@ public class SettingsFragment extends Fragment {
 
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
         //for music switch
         Intent intent = new Intent(getActivity(), BackgroundSoundService.class);
+
+//        if (savedInstanceState != null){
+//            onSaveInstanceState(savedInstanceState);
+//            lightModeChecked = savedInstanceState.getBoolean("lightModeChecked");
+//            binding.lightModeSwitch.setChecked(lightModeChecked);
+//
+//        }
 
         binding.lightModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    binding.lightModeSwitch.setChecked(true);
+//                    lightModeChecked = binding.lightModeSwitch.isChecked();
                 }
                 else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//                    lightModeChecked = binding.lightModeSwitch.isChecked();
                 }
             }
         });
@@ -45,7 +62,6 @@ public class SettingsFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     getActivity().startService(intent);
-//                    musicChecked = true;
                 }
                 else{
                     getActivity().stopService(intent);
