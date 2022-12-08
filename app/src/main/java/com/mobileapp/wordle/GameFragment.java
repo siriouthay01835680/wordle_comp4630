@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.mobileapp.wordle.databinding.FragmentGameBinding;
 
@@ -37,7 +38,7 @@ public class GameFragment extends Fragment {
     final private String row3 = "ZXCVBNM";
     final private String alphabet = row1 + row2 + row3;
 
-    //String currentWord = "";
+
 
     Button[] alphaButtons = new Button[26];
     Button submit;
@@ -188,6 +189,7 @@ public class GameFragment extends Fragment {
                 alphaButtons[index].setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.gray)));
             }
         }
+
     }
 
 
@@ -269,14 +271,31 @@ public class GameFragment extends Fragment {
 
             //can only submit if all length of the word is 5
             if(viewModel.currentGuess.length() == 5) {
-                //iterate through the current 5 letter word for keyboard
                 checkGuess();
                 viewModel.submitGuess();
                 binding.testingWord.setText(viewModel.currentGuess);
+
+                //would like a delay here so the UI can finish but didnt know how to
+                if(viewModel.isGameOver()){
+                    //possible game is over and need to switch frags
+                    GameFragmentDirections.ActionGameFragmentToResultFragment action = GameFragmentDirections.actionGameFragmentToResultFragment();
+                    System.out.println("game over");
+                    action.setWord(viewModel.winningWord);
+                    action.setIsGameWon(viewModel.isGameWon);
+                    Navigation.findNavController(view).navigate(action);
+
+                }
+
+
             }
 
-        });
+        }
+
+        );
     }
+
+
+
 
     private List <String> readFromFileToList(String fileName) throws IOException{
         InputStream inputStream = getContext().getAssets().open(fileName);
@@ -284,7 +303,7 @@ public class GameFragment extends Fragment {
         try(BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))){
             String line;
             while((line = reader.readLine()) != null){
-                System.out.println(line);
+                //System.out.println(line);
                 myList.add(line);
             }
         } catch (IOException e){

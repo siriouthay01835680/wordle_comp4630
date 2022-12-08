@@ -18,7 +18,19 @@
         android:id="@+id/resultFragment"
         android:name="com.mobileapp.wordle.ResultFragment"
         android:label="fragment_result"
-        tools:layout="@layout/fragment_result" />
+        tools:layout="@layout/fragment_result" >
+        <argument
+            android:name="word"
+            app:argType="string"
+            android:defaultValue="WORDLE" />
+        <argument
+            android:name="isGameWon"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <action
+            android:id="@+id/action_resultFragment_to_gameFragment"
+            app:destination="@id/gameFragment" />
+    </fragment>
     <fragment
         android:id="@+id/aboutFragment"
         android:name="com.mobileapp.wordle.AboutFragment"

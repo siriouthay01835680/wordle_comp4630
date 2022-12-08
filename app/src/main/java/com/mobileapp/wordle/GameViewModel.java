@@ -16,6 +16,9 @@ public class GameViewModel extends ViewModel {
     public String currentGuess;
 
 
+    public boolean isGameWon;
+
+
     public int currentPosition;
 
 
@@ -27,6 +30,7 @@ public class GameViewModel extends ViewModel {
         currentPosition = 0;
         currentGuess = "";
         winningWord = WinWord;
+        isGameWon = false;
     }
 
 
@@ -37,6 +41,10 @@ public class GameViewModel extends ViewModel {
         System.out.println("in view model current Guess word is " + currentGuess);
         System.out.println("in view model current win word is " + winningWord);
 
+
+        if(currentGuess.equals(winningWord))
+            isGameWon = true;
+
         //lives go up
         //clear current word
         currentGuess = "";
@@ -44,6 +52,16 @@ public class GameViewModel extends ViewModel {
 
         //back to start pos
         currentPosition = 0;
+
+    }
+
+
+    public boolean isGameOver(){
+        if(isGameWon || lives > 5)
+            return true;
+
+
+        return false;
 
     }
 
