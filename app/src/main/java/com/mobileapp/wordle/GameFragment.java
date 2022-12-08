@@ -13,6 +13,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -55,6 +56,24 @@ public class GameFragment extends Fragment {
 
     private View view;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            wordToGuess = savedInstanceState.getString("STATE_WORD");
+        } else {
+            try {
+                wordList = readFromFileToList("wordfile.txt");
+                wordToGuess = pickAWord(wordList);
+                System.out.println("winning word is " + wordToGuess);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,14 +82,6 @@ public class GameFragment extends Fragment {
         binding = FragmentGameBinding.inflate(inflater, container, false);
 
         View view = binding.getRoot();
-        try {
-            wordList = readFromFileToList("wordfile.txt");
-            wordToGuess = pickAWord(wordList);
-            System.out.println("winning word is" + wordToGuess);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         //view model
         viewModelFactory = new GameViewModelFactory(wordToGuess);
@@ -296,6 +307,12 @@ public class GameFragment extends Fragment {
         return wordList.get(index).toString().toUpperCase();
     }
 
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstances){
+        savedInstances.putString("STATE_WORD", viewModel.winningWord);
+        super.onSaveInstanceState(savedInstances);
+    }
 
     /* helper function that decided the color for each color in Grid
     * takes a textView and value of a color*/
