@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class GameFragment extends Fragment {
@@ -89,6 +90,22 @@ public class GameFragment extends Fragment {
         buildGameGrid();
         addKeyboard();
 
+        viewModel.isHintToggled = GameFragmentArgs.fromBundle(getArguments()).getIsHintToggled();
+        if(viewModel.isHintToggled){
+            binding.hintButton.setEnabled(true);
+        }
+
+        binding.hintButton.setOnClickListener(view1 -> {
+            //when hint button is clicked, get rand char from guess word & put in grid
+            binding.hintButton.setEnabled(false);
+            String hint = viewModel.enableHints();
+            int index = alphabet.indexOf(hint);
+            gameGrid[viewModel.lives][viewModel.hintIndex].setText(String.valueOf(viewModel.hintChar));
+            gameGrid[viewModel.lives][viewModel.hintIndex].setTextColor(Color.BLACK);
+
+            //update keyboard for hint
+            alphaButtons[index].setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+        });
 
         // Inflate the layout for this fragment
         return view;
@@ -124,6 +141,8 @@ public class GameFragment extends Fragment {
             }
         }
     }
+
+
 
     public void addKeyboard(){
         View view = binding.getRoot();
@@ -168,6 +187,15 @@ public class GameFragment extends Fragment {
                 if(viewModel.currentGuess.length() < 5) {
                     Button b = (Button) view1;
                     String key = b.getText().toString().toUpperCase();
+                    //if hint is enabled, make sure hint char cannot be changed
+                    if (viewModel.isHintEnabled && (viewModel.currentPosition == viewModel.hintIndex)) {
+                        gameGrid[viewModel.lives][viewModel.hintIndex].setText(String.valueOf(viewModel.hintChar));
+                        gameGrid[viewModel.lives][viewModel.hintIndex].setTextColor(Color.BLACK);
+                    }
+                    else {
+                        //add to grid
+                        gameGrid[viewModel.lives][viewModel.currentPosition].setText(key);
+                    }
 
                     //add to grid
                     gameGrid[viewModel.lives][viewModel.currentPosition].setText(key);
@@ -179,8 +207,8 @@ public class GameFragment extends Fragment {
                     //delete this
                     //currentWord += key;
                     binding.testingWord.setText(viewModel.currentGuess);
-                }
 
+                }
             });
 
         }
@@ -231,9 +259,9 @@ public class GameFragment extends Fragment {
             }//end of game over instructions
 
         }//end of submit button
-
         );
-    }
+
+        }
 
 
 /* checkGuess checks the guess against the winning word
