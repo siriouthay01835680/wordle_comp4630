@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,10 +31,19 @@ public class SettingsFragment extends Fragment {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }
         });
+        binding.hintSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    SettingsFragmentDirections.ActionSettingsFragmentToGameFragment action = SettingsFragmentDirections.actionSettingsFragmentToGameFragment();
+                    action.setIsHintToggled(true);
+                    Navigation.findNavController(view).navigate(action);
+                }
+            }
+        });
         // Inflate the layout for this fragment
         return view;
     }
-
     //set binding to null
     @Override
     public void onDestroyView() {
