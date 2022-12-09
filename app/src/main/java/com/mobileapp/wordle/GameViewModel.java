@@ -102,6 +102,12 @@ public class GameViewModel extends ViewModel {
 //        System.out.println(String.valueOf(winningWord.charAt(randomNum)));
         hintChar = winningWord.charAt(randomNum);
         hintIndex = winningWord.indexOf(hintChar);
+
+        gridText[lives][hintIndex] = Character.toString(hintChar);
+        gridColor[lives][hintIndex] = "GREEN";
+        keyboardColor[hintIndex] = "GREEN";
+
+
         return String.valueOf(hintChar);
     }
 

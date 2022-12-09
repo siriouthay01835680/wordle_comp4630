@@ -102,6 +102,7 @@ public class GameFragment extends Fragment {
             int index = alphabet.indexOf(hint);
             gameGrid[viewModel.lives][viewModel.hintIndex].setText(String.valueOf(viewModel.hintChar));
             gameGrid[viewModel.lives][viewModel.hintIndex].setTextColor(Color.BLACK);
+            gameGrid[viewModel.lives][viewModel.hintIndex].setBackgroundResource(R.color.green);
 
             //update keyboard for hint
             alphaButtons[index].setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
@@ -271,6 +272,13 @@ public class GameFragment extends Fragment {
 
     public void checkGuess(){
         for(int i = 0; i < 5; i++){
+                //check hint if enabaled
+            if(viewModel.isHintEnabled && i == viewModel.hintIndex){
+                gameGrid[viewModel.lives][i].setBackgroundResource(R.color.green);
+                gameGrid[viewModel.lives][i].setText(String.valueOf(viewModel.winningWord.charAt(i)));
+                gameGrid[viewModel.lives][i].setTextColor(Color.WHITE);
+                continue;
+            }
 
             char letter = viewModel.currentGuess.charAt(i);
 
