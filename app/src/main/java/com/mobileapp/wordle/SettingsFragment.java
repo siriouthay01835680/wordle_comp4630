@@ -44,7 +44,6 @@ public class SettingsFragment extends Fragment {
         // Inflate the layout for this fragment
         return view;
     }
-
     //set binding to null
     @Override
     public void onDestroyView() {

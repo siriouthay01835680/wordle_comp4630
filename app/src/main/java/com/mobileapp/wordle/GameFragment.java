@@ -19,13 +19,23 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.mobileapp.wordle.databinding.FragmentGameBinding;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Random;
+
 public class GameFragment extends Fragment {
     private FragmentGameBinding binding;
 
     // keyboard vars
-    final private String row1 = "qwertyuiop";
-    final private String row2 = "asdfghjkl";
-    final private String row3 = "zxcvbnm";
+    final private String row1 = "QWERTYUIOP";
+    final private String row2 = "ASDFGHJKL";
+    final private String row3 = "ZXCVBNM";
     final private String alphabet = row1 + row2 + row3;
 
     //String currentWord = "";
@@ -38,8 +48,10 @@ public class GameFragment extends Fragment {
     TextView[][] gameGrid = new TextView[6][5];
 
     //test variables for checkGuess() prototype; can delete along with checkGuess()
-    final String wordToGuess = "WORDL";
+    private String wordToGuess = "";
 
+    //var to hold words from text file
+    private List<String> wordList = null;
 
     // view model
     private GameViewModelFactory viewModelFactory;
@@ -55,12 +67,19 @@ public class GameFragment extends Fragment {
         //binding
         binding = FragmentGameBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        try {
+            wordList = readFromFileToList("wordfile.txt");
+            wordToGuess = pickAWord(wordList);
+            System.out.println("winning word is" + wordToGuess);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
         //view model
-        viewModelFactory = new GameViewModelFactory("wordl");
+        viewModelFactory = new GameViewModelFactory(wordToGuess);
         viewModel = new ViewModelProvider(this, viewModelFactory).get(GameViewModel.class);
-
 
         buildGameGrid();
         addKeyboard();
@@ -82,13 +101,18 @@ public class GameFragment extends Fragment {
             alphaButtons[index].setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
 
         });
+
         //prototype can be deleted later if necessary
         /*
         checkGuess("PEARL", 0);
         checkGuess("WORLD", 1);
         checkGuess("LDROW", 2);
+
         checkGuess("WORDL", 3);
         */
+
+        //checkGuess(wordToGuess, 3);
+
 
         // Inflate the layout for this fragment
         return view;
@@ -125,6 +149,7 @@ public class GameFragment extends Fragment {
     /*
     public void checkGuess(String guess, int lives){
         for(int i = 0; i < 5; i++){
+            guess = guess.toUpperCase();
             if(guess.charAt(i) == wordToGuess.charAt(i)){
             gameGrid[lives][i].setBackgroundResource(R.color.green);
             gameGrid[lives][i].setText(String.valueOf(guess.charAt(i)));
@@ -204,8 +229,7 @@ public class GameFragment extends Fragment {
             //setting up buttons position
             TableRow.LayoutParams lp = new TableRow.LayoutParams(0,android.widget.TableRow.LayoutParams.MATCH_PARENT,1f);
             if(row1.contains(letter))
-                binding.keyboardRow1.addView(
-                        alphaButtons[i], lp);
+                binding.keyboardRow1.addView(alphaButtons[i], lp);
             if(row2.contains(letter))
                 binding.keyboardRow2.addView(alphaButtons[i], lp);
             if(row3.contains(letter))
@@ -213,7 +237,7 @@ public class GameFragment extends Fragment {
 
 
             //after the l letter the submit button follows
-            if(l == 'l'){
+            if(l == 'L'){
                 lp = new TableRow.LayoutParams(0,android.widget.TableRow.LayoutParams.MATCH_PARENT,2f);
                 submit = new Button(view.getContext());
                 submit.setText("Enter");
@@ -221,7 +245,7 @@ public class GameFragment extends Fragment {
             }
 
             //after the last letter of keyboard the m letter follows
-            if(l == 'm'){
+            if(l == 'M'){
                 lp = new TableRow.LayoutParams(0,android.widget.TableRow.LayoutParams.MATCH_PARENT,1.5f);
                 delete = new Button(view.getContext());
                 delete.setText("<-");
@@ -233,7 +257,7 @@ public class GameFragment extends Fragment {
             alphaButtons[i].setOnClickListener(view1 -> {
                 if(viewModel.currentGuess.length() < 5) {
                     Button b = (Button) view1;
-                    String key = b.getText().toString();
+                    String key = b.getText().toString().toUpperCase();
                     //if hint is enabled, make sure hint char cannot be changed
                     if (viewModel.isHintEnabled && (viewModel.currentPosition == viewModel.hintIndex)) {
                         gameGrid[viewModel.lives][viewModel.hintIndex].setText(String.valueOf(viewModel.hintChar));
@@ -243,6 +267,10 @@ public class GameFragment extends Fragment {
                         //add to grid
                         gameGrid[viewModel.lives][viewModel.currentPosition].setText(key);
                     }
+
+                    //add to grid
+                    gameGrid[viewModel.lives][viewModel.currentPosition].setText(key);
+
                     viewModel.currentPosition++;
                     viewModel.currentGuess += key;
 
@@ -281,14 +309,31 @@ public class GameFragment extends Fragment {
                 binding.testingWord.setText(viewModel.currentGuess);
             }
         });
-
     }
 
+    private List <String> readFromFileToList(String fileName) throws IOException{
+        InputStream inputStream = getContext().getAssets().open(fileName);
+        List <String> myList = new ArrayList<String>();
+        try(BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))){
+            String line;
+            while((line = reader.readLine()) != null){
+                System.out.println(line);
+                myList.add(line);
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return myList;
+    }
 
-
-
+    private String pickAWord (List wordList){
+        Random rand = new Random();
+        int index = rand.nextInt(wordList.size());
+        return wordList.get(index).toString().toUpperCase();
+    }
 
 //set binding to null
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
