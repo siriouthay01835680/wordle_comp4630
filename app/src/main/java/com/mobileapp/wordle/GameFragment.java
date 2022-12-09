@@ -205,9 +205,7 @@ public class GameFragment extends Fragment {
                     viewModel.currentPosition++;
                     viewModel.currentGuess += key;
 
-                    //delete this
-                    //currentWord += key;
-                    binding.testingWord.setText(viewModel.currentGuess);
+
 
                 }
             });
@@ -224,8 +222,6 @@ public class GameFragment extends Fragment {
                 viewModel.saveGridText(" ");
 
 
-                //code below needs to be delete
-                binding.testingWord.setText(viewModel.currentGuess);
             }
         });
 
@@ -247,7 +243,7 @@ public class GameFragment extends Fragment {
 
             checkGuess();
             viewModel.submitGuess();
-            binding.testingWord.setText(viewModel.currentGuess);
+
 
             //would like a delay here so the UI can finish but didn't know how to
             if(viewModel.isGameOver()){
