@@ -36,7 +36,7 @@ public class SettingsFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     SettingsFragmentDirections.ActionSettingsFragmentToGameFragment action = SettingsFragmentDirections.actionSettingsFragmentToGameFragment();
-//                    binding.hintSwitch.setEnabled(false);
+                    action.setIsHintToggled(true);
                     Navigation.findNavController(view).navigate(action);
                 }
             }
