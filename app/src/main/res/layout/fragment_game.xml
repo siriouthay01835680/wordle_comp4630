@@ -55,5 +55,6 @@
         android:id="@+id/hintButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hint" />
+        android:text="@string/hint"
+        android:enabled="false"/>
 </LinearLayout>

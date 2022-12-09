@@ -13,6 +13,10 @@
         <action
             android:id="@+id/action_gameFragment_to_resultFragment"
             app:destination="@id/resultFragment" />
+        <argument
+            android:name="isHintToggled"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/resultFragment"

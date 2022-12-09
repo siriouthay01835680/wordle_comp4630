@@ -20,7 +20,7 @@ public class GameViewModel extends ViewModel {
     public Integer hintIndex;
     public int currentPosition;
     public char hintChar;
-
+    public Boolean isHintToggled;
 
 
 
@@ -31,6 +31,7 @@ public class GameViewModel extends ViewModel {
         winningWord = WinWord;
         isHintEnabled = false;
         hintChar = ' ';
+        isHintToggled = false;
     }
 
 

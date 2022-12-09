@@ -64,9 +64,15 @@ public class GameFragment extends Fragment {
 
         buildGameGrid();
         addKeyboard();
+
+        viewModel.isHintToggled = GameFragmentArgs.fromBundle(getArguments()).getIsHintToggled();
+        if(viewModel.isHintToggled){
+            binding.hintButton.setEnabled(true);
+        }
+
         binding.hintButton.setOnClickListener(view1 -> {
             //when hint button is clicked, get rand char from guess word & put in grid
-            binding.hintButton.setClickable(false);
+            binding.hintButton.setEnabled(false);
             String hint = viewModel.enableHints();
             int index = alphabet.indexOf(hint);
             gameGrid[viewModel.lives][viewModel.hintIndex].setText(String.valueOf(viewModel.hintChar));
