@@ -1,5 +1,7 @@
 package com.mobileapp.wordle;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -62,6 +64,8 @@ public class GameFragment extends Fragment {
         if (savedInstanceState != null) {
             wordToGuess = savedInstanceState.getString("STATE_WORD");
         } else {
+            //new game
+            incrementGamesPlayed();
             try {
                 wordList = readFromFileToList("wordfile.txt");
                 wordToGuess = pickAWord(wordList);
@@ -247,6 +251,11 @@ public class GameFragment extends Fragment {
 
             //would like a delay here so the UI can finish but didn't know how to
             if(viewModel.isGameOver()){
+
+                //update games won count
+                if(viewModel.isGameWon)
+                    incrementGamesWon();
+
                 //possible game is over and need to switch frags
                 GameFragmentDirections.ActionGameFragmentToResultFragment action = GameFragmentDirections.actionGameFragmentToResultFragment();
                 System.out.println("game over");
@@ -422,7 +431,29 @@ public class GameFragment extends Fragment {
      END: Prototype for checking guess against the word to be guessed **/
 
 
+private void incrementGamesPlayed(){
+    SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+    int defaultValue = getResources().getInteger(R.integer.saved_total_games);
+    int totalGames= sharedPref.getInt(getString(R.string.saved_total_games), defaultValue);
+    totalGames++;
 
+    SharedPreferences.Editor editor = sharedPref.edit();
+    editor.putInt(getString(R.string.saved_total_games), totalGames);
+    editor.apply();
+
+}
+
+private void incrementGamesWon(){
+    SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+    int defaultValue = getResources().getInteger(R.integer.saved_games_won);
+    int gameswon = sharedPref.getInt(getString(R.string.saved_games_won), defaultValue);
+    gameswon++;
+
+    SharedPreferences.Editor editor = sharedPref.edit();
+    editor.putInt(getString(R.string.saved_games_won), gameswon);
+    editor.apply();
+
+}
 
 //set binding to null
 
