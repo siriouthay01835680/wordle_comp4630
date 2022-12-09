@@ -54,7 +54,6 @@ public class GameFragment extends Fragment {
     private GameViewModelFactory viewModelFactory;
     private GameViewModel viewModel;
 
-    private View view;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -203,28 +202,35 @@ public class GameFragment extends Fragment {
 
         //submits word to Game
         submit.setOnClickListener(view1 -> {
-            //this is where we can check if a word is valid
-
-            //can only submit if all length of the word is 5
-            if(viewModel.currentGuess.length() == 5) {
-                checkGuess();
-                viewModel.submitGuess();
-                binding.testingWord.setText(viewModel.currentGuess);
-
-                //would like a delay here so the UI can finish but didn't know how to
-                if(viewModel.isGameOver()){
-                    //possible game is over and need to switch frags
-                    GameFragmentDirections.ActionGameFragmentToResultFragment action = GameFragmentDirections.actionGameFragmentToResultFragment();
-                    System.out.println("game over");
-                    action.setWord(viewModel.winningWord);
-                    action.setIsGameWon(viewModel.isGameWon);
-                    Navigation.findNavController(view).navigate(action);
-                }
-            } else {
-                    //error message that length is too short
-                Toast.makeText(getActivity().getApplicationContext(),"word must have 5 letters", Toast.LENGTH_SHORT).show();
+            //only accepts 5 letter submissions
+            if(viewModel.currentGuess.length() != 5) {
+                //error message that length is too short and leaves
+                Toast.makeText(requireActivity().getApplicationContext(), "Word must have 5 letters", Toast.LENGTH_SHORT).show();
+                return;
             }
-        } //end of submit button
+
+            //only accepts valid words
+            if(!wordList.contains(viewModel.currentGuess.toLowerCase())) {
+                //error messaege to user than exits
+                Toast.makeText(requireActivity().getApplicationContext(), "Word not in our word bank", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            checkGuess();
+            viewModel.submitGuess();
+            binding.testingWord.setText(viewModel.currentGuess);
+
+            //would like a delay here so the UI can finish but didn't know how to
+            if(viewModel.isGameOver()){
+                //possible game is over and need to switch frags
+                GameFragmentDirections.ActionGameFragmentToResultFragment action = GameFragmentDirections.actionGameFragmentToResultFragment();
+                System.out.println("game over");
+                action.setWord(viewModel.winningWord);
+                action.setIsGameWon(viewModel.isGameWon);
+                Navigation.findNavController(view).navigate(action);
+            }//end of game over instructions
+
+        }//end of submit button
 
         );
     }
@@ -358,8 +364,8 @@ public class GameFragment extends Fragment {
 
 
 
-    /** BEGIN: Prototype for checking guess against the word to be guessed; can be deleted **/
-    /*
+    /** BEGIN: Prototype for checking guess against the word to be guessed; can be deleted
+
     public void checkGuess(String guess, int lives){
         for(int i = 0; i < 5; i++){
             guess = guess.toUpperCase();
@@ -380,8 +386,8 @@ public class GameFragment extends Fragment {
                 gameGrid[lives][i].setTextColor(Color.WHITE);
             }
         }
-    }*/
-    /** END: Prototype for checking guess against the word to be guessed **/
+    }
+     END: Prototype for checking guess against the word to be guessed **/
 
 
 
