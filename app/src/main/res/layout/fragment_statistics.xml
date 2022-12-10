@@ -11,7 +11,7 @@
     <TextView
         android:id="@+id/gamesWonText"
         android:layout_width="match_parent"
-        android:layout_height="17dp"
+        android:layout_height="30sp"
         android:fontFamily="monospace"
         android:layout_marginTop="100dp"
         android:text=""

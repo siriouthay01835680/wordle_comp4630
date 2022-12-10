@@ -25,7 +25,7 @@ public class StatisticsFragment extends Fragment {
         SharedPreferences sharedPref = getActivity().getPreferences( Context.MODE_PRIVATE);
 
         int defaultValueWon = getResources().getInteger(R.integer.saved_games_won);
-        double gamesWon = sharedPref.getInt(getString(R.string.saved_games_won), defaultValueWon);
+        int gamesWon = sharedPref.getInt(getString(R.string.saved_games_won), defaultValueWon);
 
         binding.gamesWonText.setText(String.valueOf(gamesWon));
 
