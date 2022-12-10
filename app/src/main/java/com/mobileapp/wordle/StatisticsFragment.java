@@ -21,23 +21,13 @@ public class StatisticsFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentStatisticsBinding.inflate(inflater, container, false);
 
+        //read data
+        SharedPreferences sharedPref = getActivity().getPreferences( Context.MODE_PRIVATE);
 
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         int defaultValueWon = getResources().getInteger(R.integer.saved_games_won);
-        int gamesWon = sharedPref.getInt(getString(R.string.saved_games_won), defaultValueWon);
-
-        int defaultValueGames = getResources().getInteger(R.integer.saved_total_games);
-        float totalGames = sharedPref.getInt(getString(R.string.saved_total_games), defaultValueGames);
-
-
-        float winRate = gamesWon/totalGames* 100;
-        String displayRate = String.valueOf(winRate + '%');
-
-        System.out.println("games won in stats"+ gamesWon);
+        double gamesWon = sharedPref.getInt(getString(R.string.saved_games_won), defaultValueWon);
 
         binding.gamesWonText.setText(String.valueOf(gamesWon));
-        binding.winRateText.setText(displayRate);
-
 
         View view = binding.getRoot();
 

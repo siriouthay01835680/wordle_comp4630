@@ -15,16 +15,17 @@
         app:showAsAction="withText" />
 
     <item
+        android:id="@+id/statisticsFragment"
+        android:title="@string/statsIcon"
+        android:icon="@drawable/statsicon"
+        app:showAsAction="withText" />
+
+    <item
         android:id="@+id/aboutFragment"
         android:title="@string/aboutIcon"
         android:icon="@drawable/profileicon"
         app:showAsAction="withText" />
 
 
-    <item
-        android:id="@+id/statisticsFragment"
-        android:title="@string/statsIcon"
-        android:icon="@drawable/statsicon"
-        app:showAsAction="withText" />
 
 </menu>

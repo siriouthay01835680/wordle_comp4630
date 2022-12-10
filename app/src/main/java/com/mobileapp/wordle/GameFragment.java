@@ -58,14 +58,14 @@ public class GameFragment extends Fragment {
     private GameViewModel viewModel;
 
 
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
             wordToGuess = savedInstanceState.getString("STATE_WORD");
         } else {
-            //new game
-            incrementGamesPlayed();
             try {
                 wordList = readFromFileToList("wordfile.txt");
                 wordToGuess = pickAWord(wordList);
@@ -251,15 +251,13 @@ public class GameFragment extends Fragment {
 
             //would like a delay here so the UI can finish but didn't know how to
             if(viewModel.isGameOver()){
-
-                //update games won count
                 if(viewModel.isGameWon)
                     incrementGamesWon();
 
                 //possible game is over and need to switch frags
                 GameFragmentDirections.ActionGameFragmentToResultFragment action = GameFragmentDirections.actionGameFragmentToResultFragment();
-                System.out.println("game over");
                 action.setWord(viewModel.winningWord);
+
                 action.setIsGameWon(viewModel.isGameWon);
                 Navigation.findNavController(view).navigate(action);
             }//end of game over instructions
@@ -431,29 +429,24 @@ public class GameFragment extends Fragment {
      END: Prototype for checking guess against the word to be guessed **/
 
 
-private void incrementGamesPlayed(){
-    SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-    int defaultValue = getResources().getInteger(R.integer.saved_total_games);
-    int totalGames= sharedPref.getInt(getString(R.string.saved_total_games), defaultValue);
-    totalGames++;
 
-    SharedPreferences.Editor editor = sharedPref.edit();
-    editor.putInt(getString(R.string.saved_total_games), totalGames);
-    editor.apply();
-
-}
 
 private void incrementGamesWon(){
+
+    //read current data to increment
     SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
     int defaultValue = getResources().getInteger(R.integer.saved_games_won);
     int gameswon = sharedPref.getInt(getString(R.string.saved_games_won), defaultValue);
     gameswon++;
 
+    //set new value to store
     SharedPreferences.Editor editor = sharedPref.edit();
     editor.putInt(getString(R.string.saved_games_won), gameswon);
     editor.apply();
 
 }
+
+
 
 //set binding to null
 

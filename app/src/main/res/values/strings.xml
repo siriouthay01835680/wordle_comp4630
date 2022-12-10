@@ -45,10 +45,7 @@
 
     <!-- strings for stats frag -->
     <string name="gamesWontext">Games Won</string>
-    <string name="winRatetext">Win Rate</string>
     <string name="gamesWon"></string>
-    <string name="winRate"></string>
-    <string name="totalGames">0</string>
     <string name="saved_games_won" />
-    <string name="saved_total_games" />
+
 </resources>
