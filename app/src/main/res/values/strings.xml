@@ -25,9 +25,9 @@
     <string name="aboutUsText">Game App developed by UMass Lowell students:\nAria Siriouthay, Josephine Luna, Jennifer Robles </string>
     <string name="contactTitle">Contact Us</string>
     <string name="contactText">Any questions or concerns please email\n<i>email@email.com</i></string>
-    
+
     <!-- settings strings -->
-     <string name="lightMode">Light Mode</string>
+    <string name="lightMode">Light Mode</string>
     <string name="hints">Hints</string>
     <string name="music">Music</string>
     <string name="on">On</string>
@@ -39,4 +39,6 @@
     <string name="aboutIcon">about</string>
     <string name="settingIcon">settings</string>
     <string name="hint">Hint</string>
+    <string name="hintDirections">Please note that enabling hints will cause the game to reset. \n Press the save button to save changes and/or reset the game.</string>
+    <string name="save">Save</string>
 </resources>
