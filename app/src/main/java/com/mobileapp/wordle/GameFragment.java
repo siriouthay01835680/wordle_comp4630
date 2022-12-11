@@ -57,8 +57,6 @@ public class GameFragment extends Fragment {
     private GameViewModelFactory viewModelFactory;
     private GameViewModel viewModel;
 
-    //save state variable
-    public char[] winWordSave = new char[5];
 
 
 
