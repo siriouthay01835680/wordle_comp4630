@@ -57,24 +57,25 @@ public class GameFragment extends Fragment {
     private GameViewModelFactory viewModelFactory;
     private GameViewModel viewModel;
 
+    //save state variable
+    public char[] winWordSave = new char[5];
 
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
+            wordList = readFromFileToList("wordfile.txt");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         if (savedInstanceState != null) {
             wordToGuess = savedInstanceState.getString("STATE_WORD");
         } else {
-            try {
-                wordList = readFromFileToList("wordfile.txt");
-                wordToGuess = pickAWord(wordList);
-                System.out.println("winning word is " + wordToGuess);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
+            wordToGuess = pickAWord(wordList);
+            System.out.println("winning word is " + wordToGuess);
         }
     }
 
@@ -240,7 +241,7 @@ public class GameFragment extends Fragment {
 
             //only accepts valid words
             if(!wordList.contains(viewModel.currentGuess.toLowerCase())) {
-                //error messaege to user than exits
+                //error messaege to user than
                 Toast.makeText(requireActivity().getApplicationContext(), "Word not in our word bank", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -337,10 +338,10 @@ public class GameFragment extends Fragment {
         try(BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))){
             String line;
             while((line = reader.readLine()) != null){
-                //System.out.println(line);
                 myList.add(line);
             }
         } catch (IOException e){
+            System.out.println("Catching an exception");
             e.printStackTrace();
         }
         return myList;
@@ -355,7 +356,7 @@ public class GameFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle savedInstances){
-        savedInstances.putString("STATE_WORD", viewModel.winningWord);
+        savedInstances.putString("STATE_WORD", wordToGuess);
         super.onSaveInstanceState(savedInstances);
     }
 
@@ -400,34 +401,6 @@ public class GameFragment extends Fragment {
         }
 
     }
-
-
-
-    /** BEGIN: Prototype for checking guess against the word to be guessed; can be deleted
-
-    public void checkGuess(String guess, int lives){
-        for(int i = 0; i < 5; i++){
-            guess = guess.toUpperCase();
-            if(guess.charAt(i) == wordToGuess.charAt(i)){
-            gameGrid[lives][i].setBackgroundResource(R.color.green);
-            gameGrid[lives][i].setText(String.valueOf(guess.charAt(i)));
-            gameGrid[lives][i].setTextColor(Color.WHITE);
-            }
-
-            else if(wordToGuess.contains(String.valueOf(guess.charAt(i)))){
-                gameGrid[lives][i].setBackgroundResource(R.color.yellow);
-                gameGrid[lives][i].setText(String.valueOf(guess.charAt(i)));
-                gameGrid[lives][i].setTextColor(Color.WHITE);
-            }
-            else {
-                gameGrid[lives][i].setBackgroundResource(R.color.gray);
-                gameGrid[lives][i].setText(String.valueOf(guess.charAt(i)));
-                gameGrid[lives][i].setTextColor(Color.WHITE);
-            }
-        }
-    }
-     END: Prototype for checking guess against the word to be guessed **/
-
 
 
 

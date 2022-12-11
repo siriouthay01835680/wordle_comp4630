@@ -1,11 +1,5 @@
 package com.mobileapp.wordle;
 
-import android.content.Context;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.util.Pair;
-import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.lifecycle.ViewModel;
 
@@ -98,8 +92,6 @@ public class GameViewModel extends ViewModel {
         Random rand = new Random();
         isHintEnabled = true;
         int randomNum = rand.nextInt(5);
-//        System.out.println(randomNum);
-//        System.out.println(String.valueOf(winningWord.charAt(randomNum)));
         hintChar = winningWord.charAt(randomNum);
         hintIndex = winningWord.indexOf(hintChar);
 

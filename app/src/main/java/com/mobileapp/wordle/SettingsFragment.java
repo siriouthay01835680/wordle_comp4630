@@ -17,17 +17,6 @@ import com.mobileapp.wordle.databinding.FragmentSettingsBinding;
 public class SettingsFragment extends Fragment {
     private FragmentSettingsBinding binding;
 
-    //save state variables
-//    private boolean lightModeChecked = false, musicChecked = false;
-
-    //save the state of the switches
-//    @Override
-//    public void onSaveInstanceState(Bundle savedInstanceState) {
-//        savedInstanceState.putBoolean("lightModeChecked", lightModeChecked);
-//        savedInstanceState.putBoolean("musicChecked", musicChecked);
-//        super.onSaveInstanceState(savedInstanceState);
-//    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -38,13 +27,6 @@ public class SettingsFragment extends Fragment {
         //for music switch
         Intent intent = new Intent(getActivity(), BackgroundSoundService.class);
 
-//        if (savedInstanceState != null){
-//            onSaveInstanceState(savedInstanceState);
-//            lightModeChecked = savedInstanceState.getBoolean("lightModeChecked");
-//            binding.lightModeSwitch.setChecked(lightModeChecked);
-//
-//        }
-
         final SettingsFragmentDirections.ActionSettingsFragmentToGameFragment action = SettingsFragmentDirections.actionSettingsFragmentToGameFragment();
 
 
@@ -52,11 +34,9 @@ public class SettingsFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-//                    lightModeChecked = binding.lightModeSwitch.isChecked();
                 }
                 else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-//                    lightModeChecked = binding.lightModeSwitch.isChecked();
                 }
             }
         });

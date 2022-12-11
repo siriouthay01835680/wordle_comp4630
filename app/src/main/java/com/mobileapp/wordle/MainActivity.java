@@ -27,7 +27,7 @@ I certify that the work submitted with this assignment is
 mine and was generated in a manner consistent with this
 document, the course academic policy on the course website
 on Blackboard, and the UMass Lowell academic code.
-Date:
+Date: 12-12-22
 Names: Jennifer Robles, Josephine Luna, Aria Siriouthay
 */
 package com.mobileapp.wordle;
