@@ -38,7 +38,16 @@
     <string name="helpIcon">help</string>
     <string name="aboutIcon">about</string>
     <string name="settingIcon">settings</string>
+    <string name="statsIcon">statistics</string>
     <string name="hint">Hint</string>
+
+    <!-- strings for stats frag -->
+    <string name="gamesWontext">Games Won</string>
+    <string name="gamesWon"></string>
+    <string name="saved_games_won" />
+
+
     <string name="hintDirections">Please note that enabling hints will cause the game to reset. \n Press the save button to save changes and/or reset the game.</string>
     <string name="save">Save</string>
+
 </resources>

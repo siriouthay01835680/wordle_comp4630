@@ -1,5 +1,7 @@
 package com.mobileapp.wordle;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -54,6 +56,8 @@ public class GameFragment extends Fragment {
     // view model
     private GameViewModelFactory viewModelFactory;
     private GameViewModel viewModel;
+
+
 
 
     @Override
@@ -247,10 +251,13 @@ public class GameFragment extends Fragment {
 
             //would like a delay here so the UI can finish but didn't know how to
             if(viewModel.isGameOver()){
+                if(viewModel.isGameWon)
+                    incrementGamesWon();
+
                 //possible game is over and need to switch frags
                 GameFragmentDirections.ActionGameFragmentToResultFragment action = GameFragmentDirections.actionGameFragmentToResultFragment();
-                System.out.println("game over");
                 action.setWord(viewModel.winningWord);
+
                 action.setIsGameWon(viewModel.isGameWon);
                 Navigation.findNavController(view).navigate(action);
             }//end of game over instructions
@@ -421,6 +428,23 @@ public class GameFragment extends Fragment {
     }
      END: Prototype for checking guess against the word to be guessed **/
 
+
+
+
+private void incrementGamesWon(){
+
+    //read current data to increment
+    SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+    int defaultValue = getResources().getInteger(R.integer.saved_games_won);
+    int gameswon = sharedPref.getInt(getString(R.string.saved_games_won), defaultValue);
+    gameswon++;
+
+    //set new value to store
+    SharedPreferences.Editor editor = sharedPref.edit();
+    editor.putInt(getString(R.string.saved_games_won), gameswon);
+    editor.apply();
+
+}
 
 
 

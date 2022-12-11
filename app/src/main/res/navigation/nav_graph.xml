@@ -54,4 +54,9 @@
             android:id="@+id/action_settingsFragment_to_gameFragment"
             app:destination="@id/gameFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/statisticsFragment"
+        android:name="com.mobileapp.wordle.StatisticsFragment"
+        android:label="fragment_statistics"
+        tools:layout="@layout/fragment_statistics" />
 </navigation>
