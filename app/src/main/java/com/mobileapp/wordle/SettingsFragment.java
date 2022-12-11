@@ -45,6 +45,9 @@ public class SettingsFragment extends Fragment {
 //
 //        }
 
+        final SettingsFragmentDirections.ActionSettingsFragmentToGameFragment action = SettingsFragmentDirections.actionSettingsFragmentToGameFragment();
+
+
         binding.lightModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
@@ -73,11 +76,13 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    SettingsFragmentDirections.ActionSettingsFragmentToGameFragment action = SettingsFragmentDirections.actionSettingsFragmentToGameFragment();
                     action.setIsHintToggled(true);
-                    Navigation.findNavController(view).navigate(action);
                 }
             }
+        });
+
+        binding.saveButton.setOnClickListener(view1 -> {
+            Navigation.findNavController(view).navigate(action);
         });
         // Inflate the layout for this fragment
         return view;
