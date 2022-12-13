@@ -1,13 +1,16 @@
 /***********************************************
  Authors: Jennifer Robles, Josephine Luna, Aria Siriouthay
- Date: <today’s date>
- Purpose: <Insert the purpose of the program here>
- What Learned: <what have you learned most from doing this
- assignment>
- Sources of Help: <Please list any sources that you used
- for help: tutors, web sites, lab assistants etc.>
- Time Spent (Hours): <Insert how much time you spent
- on the assignment here>
+ Date: 12-12-22
+ Purpose: To recreate Wordle as an app using the skills 
+ we've learned in class
+ What Learned: Collaborative coding with GitHub, 
+ Populating Views dynamically, Adding audio,
+ Game Statistics, Fragment Cycles, Android Studio Dark
+ theme, App Architecture, Reading from text file, 
+ Paired programming
+ Sources of Help: stackoverflow, youtube, geeksforgeeks,
+ misc. google searches
+ Time Spent (Hours): 4 weeks
  ***********************************************/
 /*
 Mobile App Development I -- COMP.4630 Honor Statement
